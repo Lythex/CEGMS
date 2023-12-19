@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CourseManagement {
     // Static variables to store courses and grades
@@ -7,16 +8,18 @@ public class CourseManagement {
     private static ArrayList<Course> courses = new ArrayList<>();
     private static HashMap<Student, HashMap<Course, String>> courseGrades = new HashMap<>();
 
+
+
     static {
         initializeSampleData();
     }
 
     private static void initializeSampleData() {
         // Adding sample students
-        students.add(new Student("Alice Johnson", "S1001"));
-        students.add(new Student("Bob Smith", "S1002"));
-        students.add(new Student("Charlie Brown", "S1003"));
-        students.add(new Student("Diana Prince", "S1004"));
+        students.add(new Student("Izumi Curtis", "S1001"));
+        students.add(new Student("Roy Mustang", "S1002"));
+        students.add(new Student("Shao Tucker", "S1003"));
+        students.add(new Student("Edward Elric", "S1004"));
         students.add(new Student("Alphonse Elric", "S1005"));
 
         // Adding sample courses
@@ -24,10 +27,48 @@ public class CourseManagement {
         courses.add(new Course("C102", "Elixir Crafting", 30));
         courses.add(new Course("C103", "Elemental Fusion", 30));
         courses.add(new Course("C104", "Artisan Alchemy: Bringing Art to Life", 30));
-        courses.add(new Course("C105", "Intro to Alchemy", 30));
+        courses.add(new Course("C105", "Intro to Chimeras", 30));
     }
 
+    public static String getStudentDetails(String studentId) {
+        Student student = findStudentById(studentId);
+        if (student == null) {
+            return "Student not found.";
+        }
 
+        StringBuilder details = new StringBuilder();
+        details.append("Student Name: ").append(student.getName()).append("\n");
+        details.append("Student ID: ").append(student.getID()).append("\n");
+        details.append("Enrolled Courses and Grades:\n");
+
+        HashMap<Course, String> enrolledCourses = student.getEnrolledCourses();
+        for (Map.Entry<Course, String> entry : enrolledCourses.entrySet()) {
+            Course course = entry.getKey();
+            String grade = entry.getValue() == null ? "Not Graded" : entry.getValue();
+            details.append(" - ").append(course.getName()).append(" (")
+                    .append(course.getCourseCode())
+                    .append("): Grade: ").append(grade).append("\n");
+        }
+        String overallGrade = calculateOverallGrade(student);
+        details.append("Current Overall Grade: ").append(overallGrade).append("\n");
+
+        return details.toString();
+    }
+
+    public static String listAllCourses() {
+        if (courses.isEmpty()) {
+            return "No courses available.";
+        }
+
+        StringBuilder courseList = new StringBuilder();
+        for (Course course : courses) {
+            courseList.append("Course Code: ").append(course.getCourseCode())
+                    .append(", Name: ").append(course.getName())
+                    .append(", Max Capacity: ").append(course.getMaxCapacity())
+                    .append("\n");
+        }
+        return courseList.toString();
+    }
 
     // Method to find a student by ID
     public static Student findStudentById(String id) {
@@ -121,54 +162,8 @@ public class CourseManagement {
         if (points >= 0.5) return "D";
         return "F";}
 
-    // Rest of the methods...
-
     // Method to add a new course
     public static void addCourse(Course course) {
         courses.add(course);
     }
-
-    // Method to enroll a student in a course
-//    public static void enrollStudent(Student student, Course course) {
-//        if (course.getTotalEnrolledStudents() < course.getMaxCapacity()) {
-//            student.enrollInCourse(course);
-//            Course.incrementEnrolledStudents();
-//            if (!courseGrades.containsKey(student)) {
-//                courseGrades.put(student, new HashMap<>());
-//            }
-//            courseGrades.get(student).put(course, null);
-//        } else {
-//            System.out.println("Course capacity reached.");
-//        }
-//    }
-
-//    // Method to assign a grade
-//    public static void assignGrade(Student student, Course course, String grade) {
-//        if (courseGrades.containsKey(student) && courseGrades.get(student).containsKey(course)) {
-//            courseGrades.get(student).put(course, grade);
-//            student.assignGrade(course, grade);
-//        }
-//    }
-
-//    // Method to calculate overall grade for a student
-//    public static String calculateOverallGrade(Student student) {
-//        HashMap<Course, String> grades = student.getEnrolledCourses();
-//        // Calculate and return the overall grade based on the grades map
-//        // This is left as an exercise - you could average the grades or use another method
-//        return "Overall Grade Calculation Here";
-//    }
-//
-//
-
-// Method Graveyard:
-// New methods for data retrieval
-//    public static Student findStudentById(String id) {
-//        // Logic to find and return a student by ID
-//        // This could be a search in an ArrayList or HashMap
-//    }
-//
-//    public static Course findCourseByCode(String code) {
-//        // Logic to find and return a course by its code
-//        // This could be a search in an ArrayList or HashMap
-//    }
 }

@@ -24,6 +24,12 @@ public class CourseManagementCLI {
                     calculateOverallGrade();
                     break;
                 case 5:
+                    viewStudentDetails();
+                    break;
+                case 6:
+                    listAllCourses();
+                    break;
+                case 7:
                     running = false;
                     break;
                 default:
@@ -38,7 +44,9 @@ public class CourseManagementCLI {
         System.out.println("2. Enroll Student in Course");
         System.out.println("3. Assign Grade to Student");
         System.out.println("4. Calculate Overall Grade for Student");
-        System.out.println("5. Exit");
+        System.out.println("5. View Student Details");
+        System.out.println("6. View All Available Courses");
+        System.out.println("7. Exit");
         System.out.print("Choose an option: ");
     }
 
@@ -104,4 +112,15 @@ public class CourseManagementCLI {
             System.out.println("Student not found.");
         }
     }
+
+    private static void viewStudentDetails() {
+        System.out.print("Enter Student ID: ");
+        String studentId = scanner.next();
+        String details = CourseManagement.getStudentDetails(studentId);
+        System.out.println(details);
+    }
+    private static void listAllCourses() {
+        System.out.println(CourseManagement.listAllCourses());
+    }
+
 }

@@ -47,9 +47,3 @@ public class Student {
         }
     }
 }
-// Depreciated Method  Pile:
-// Method to get enrolled courses and grades
-//    public HashMap<Course, String> getEnrolledCourses() {
-//        return enrolledCourses;
-//    }
-
